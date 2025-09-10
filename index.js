@@ -10,8 +10,14 @@ const port = 3003;
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Enable CORS
-app.use(cors());
+// ✅ Enable CORS for specific frontend domain
+app.use(cors({
+  origin: ['https://deveraa.com', 'http://localhost:3000'], // allow your domain + local dev
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+// Handle preflight requests
+app.options('*', cors());
 
 app.get('/', function (req, res) {
     res.send('Welcome To Deveraa E-mail Service API.');
